@@ -17,8 +17,8 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public List<Instructor> getAllInstructors() {
-        return instructorRepository.getAllInstructors();
+    public List<Instructor> getAllInstructors(int pageSize, int pageNumber) {
+        return instructorRepository.getAllInstructors(pageSize, pageNumber);
     }
 
     @Override

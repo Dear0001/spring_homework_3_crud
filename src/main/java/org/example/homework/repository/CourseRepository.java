@@ -28,14 +28,6 @@ public interface CourseRepository {
     @Result(property = "instructor", column = "instructor_id", one = @One(select = "org.example.homework.repository.InstructorRepository.findInstructorById"))
     Course updateCourse(Integer id, CourseRequest courseRequest);
 
-
-    @Select("""
-        SELECT * FROM courses
-        ORDER BY course_id ASC
-        """)
-    @Result(property = "instructor", column = "instructor_id", one = @One(select = "org.example.homework.repository.InstructorRepository.findInstructorById"))
-    List<Course> getAllCourses();
-
     @Select("""
         SELECT * FROM courses
         WHERE course_id = #{id}
@@ -48,4 +40,10 @@ public interface CourseRepository {
         WHERE course_id = #{course_id}
         """)
     void deleteById(Integer id);
+
+    @Select("""
+        SELECT * FROM courses ORDER BY course_id
+        LIMIT #{size} OFFSET #{size} * (#{page} - 1)
+        """)
+    List<Course> getAllCourses(int page, int size);
 }

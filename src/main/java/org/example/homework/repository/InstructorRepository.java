@@ -10,8 +10,10 @@ import java.util.List;
 public interface InstructorRepository {
 
     @Select("""
-    SELECT * FROM instructors ORDER BY instructor_id ASC""")
-    List<Instructor> getAllInstructors();
+    SELECT * FROM instructors ORDER BY instructor_id ASC
+    LIMIT #{pageSize} OFFSET #{pageSize} * (#{pageNumber} - 1)
+""")
+    List<Instructor> getAllInstructors(int pageSize, int pageNumber);
 
     @Select("""
     SELECT * FROM instructors WHERE instructor_id = #{id}""")

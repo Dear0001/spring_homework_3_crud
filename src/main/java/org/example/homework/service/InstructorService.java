@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InstructorService {
 
-    List<Instructor> getAllInstructors();
+    List<Instructor> getAllInstructors(int pageSize, int pageNumber);
 
     Instructor getInstructorById(Integer id);
     Instructor postInstructor(InstructorRequest instructorRequest);

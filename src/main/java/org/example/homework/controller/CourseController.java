@@ -55,8 +55,12 @@ public class CourseController {
     }
 
     @GetMapping("getAllCourses")
-    public ResponseEntity<?> getAllCourses() {
-        List<Course> courses = courseService.getAllCourses();
+    public ResponseEntity<?> getAllCourses(@RequestParam(required = false, defaultValue = "1") String page,
+                                           @RequestParam(required = false, defaultValue = "5") String size) {
+        int pageNumber = Integer.parseInt(page);
+        int pageSize = Integer.parseInt(size);
+
+        List<Course> courses = courseService.getAllCourses(pageNumber, pageSize);
         return ResponseEntity.ok(
                 new APIResponse<>(
                         "Courses have been successfully fetched.",

@@ -19,8 +19,11 @@ public class InstructorController {
         this.instructorService = instructorService;
     }
     @GetMapping
-    public ResponseEntity<?> getAllInstructors() {
-        List<Instructor> instructor = instructorService.getAllInstructors();
+    public ResponseEntity<?> getAllInstructors(@RequestParam(required = false, defaultValue = "1") String page,
+                                               @RequestParam(required = false, defaultValue = "5") String size) {
+        int pageNumber = Integer.parseInt(page);
+        int pageSize = Integer.parseInt(size);
+        List<Instructor> instructor = instructorService.getAllInstructors(pageSize, pageNumber);
         APIResponse<List<Instructor>> response = new APIResponse<>(
                 "All instructors have been successfully fetched.",
                 200,

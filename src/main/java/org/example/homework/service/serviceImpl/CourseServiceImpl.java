@@ -28,11 +28,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.getAllCourses();
-    }
-
-    @Override
     public Course getCourseById(Integer id) {
         return courseRepository.getCourseById(id);
     }
@@ -40,6 +35,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void deleteById(Integer id) {
         courseRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Course> getAllCourses(int pageNumber, int pageSize) {
+        return courseRepository.getAllCourses(pageNumber, pageSize);
     }
 
 }
