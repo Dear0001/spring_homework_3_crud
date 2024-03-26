@@ -2,8 +2,10 @@ package org.example.homework.model.dto.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.homework.model.Course;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class APIResponse<T> {
     private String message;
     private Integer code;
