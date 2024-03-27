@@ -47,4 +47,5 @@ public interface CourseRepository {
         """)
     @Result(property = "instructor", column = "instructor_id", one = @One(select = "org.example.homework.repository.InstructorRepository.findInstructorById"))
     List<Course> getAllCourses(int page, int size);
+
 }

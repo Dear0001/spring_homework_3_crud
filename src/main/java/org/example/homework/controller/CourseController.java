@@ -1,12 +1,9 @@
 package org.example.homework.controller;
 
-import lombok.Data;
 import org.example.homework.model.Course;
-import org.example.homework.model.Instructor;
 import org.example.homework.model.dto.Request.CourseRequest;
 import org.example.homework.model.dto.Response.APIResponse;
 import org.example.homework.service.CourseService;
-import org.example.homework.service.InstructorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -10,14 +10,14 @@ CREATE TABLE courses (
     course_name VARCHAR(100),
     description VARCHAR(100),
     instructor_id INT,
-    FOREIGN KEY (instructor_id) REFERENCES instructors(instructor_id)
+    FOREIGN KEY (instructor_id) REFERENCES instructors(instructor_id) ON DELETE CASCADE
 );
 
 CREATE TABLE student_courses (
     student_id INT,
     course_id INT,
-    FOREIGN KEY (student_id) REFERENCES students(student_id),
-    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+    FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
 );
 
 CREATE TABLE students (
@@ -26,7 +26,7 @@ CREATE TABLE students (
     email VARCHAR(100),
     phone_number VARCHAR(100)
 );
+
 SELECT s.student_id, s.student_name, s.email, s.phone_number
-FROM students s
-         JOIN student_courses sc ON s.student_id = sc.student_id
-WHERE s.student_id = 5;
+FROM students s JOIN student_courses
+ON s.student_id = student_courses.student_id

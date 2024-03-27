@@ -8,36 +8,50 @@ import java.util.List;
 
 @Mapper
 public interface StudentRepository {
-    @Select("""
-        SELECT * FROM students
+
+    @Select(""" 
+        SELECT s.*, sc.course_id
+        FROM students s
+        JOIN student_courses sc ON s.student_id = sc.student_id
+        LIMIT #{pageSize} OFFSET #{pageSize} * (#{pageNumber} - 1)
         """)
-   @Result(property = "course", column = "course_id", many = @Many(select = "org.example.homework.repository.CourseRepository.findCourseById"))
-    List<Student> getAllStudent();
+    @Result(property = "course", column = "course_id", many = @Many(select = "org.example.homework.repository.CourseRepository.getCourseById"))
+    List<Student> getAllStudent(@Param("pageSize") Integer pageSize, @Param("pageNumber") Integer pageNumber);
+
+    @Select("""
+        SELECT s.*, sc.course_id
+        FROM students s
+        JOIN student_courses sc ON s.student_id = sc.student_id
+        WHERE s.student_id = #{Id}
+        """)
+    @Result(property = "course", column = "course_id", many = @Many(select = "org.example.homework.repository.CourseRepository.getCourseById"))
+    Student getStudentById(Integer id);
 
 
     @Select("""
-        SELECT * FROM students WHERE students.student_id = #{students}
+        INSERT INTO students (student_name, email, phone_number)
+        VALUES (#{student_name}, #{email}, #{phone_number})
+        RETURNING student_id
         """)
-    Student findStudentById(@Param("students") Integer id);
+//    @Result(property = "course", column = "course_id", many = @Many(select = "org.example.homework.repository.CourseRepository.getCourseById"))
+     Integer postStudent(StudentRequest studentRequest);
 
-//    @Select("""
-//        INSERT INTO students (student_name, email, phone_number)
-//        VALUES (#{students.student_name}, #{students.email}, #{students.phone_number})
-//        RETURNING *
-//        """)
-//    Student postStudent(@Param("students") StudentRequest studentRequest);
-//
-//
-//    @Select("""
-//        UPDATE students
-//        SET student_name = #{student.student_name}, email = #{student.email}, phone_number = #{student.phone_number}
-//        WHERE students.student_id = #{id}
-//        RETURNING *
-//        """)
-//    Student updateStudent(Integer id, @Param("student") StudentRequest studentRequest);
-//
-//    @Delete("""
-//        DELETE FROM students WHERE students.student_id = #{students}
-//        """)
-//    void deleteStudent(@Param("students") Integer id);
+    @Insert("""
+        INSERT INTO student_courses VALUES (#{studentId}, #{courseId})
+        """)
+    Integer studentCourse(Integer studentId, Integer courseId);
+    
+    @Delete("""
+        DELETE FROM students
+        WHERE student_id = #{id}
+        """)
+    void deleteStudent(Integer id);
+
+
+    @Update("""
+        UPDATE students
+        SET student_name = #{studentRequest.student_name}, email = #{studentRequest.email}, phone_number = #{studentRequest.phone_number}
+        WHERE student_id = #{id}
+        """)
+    void updateStudent(Integer id, StudentRequest studentRequest);
 }
