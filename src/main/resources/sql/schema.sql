@@ -26,3 +26,7 @@ CREATE TABLE students (
     email VARCHAR(100),
     phone_number VARCHAR(100)
 );
+SELECT s.student_id, s.student_name, s.email, s.phone_number
+FROM students s
+         JOIN student_courses sc ON s.student_id = sc.student_id
+WHERE s.student_id = 5;

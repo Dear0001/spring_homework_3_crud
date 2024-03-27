@@ -11,15 +11,15 @@ public interface StudentRepository {
     @Select("""
         SELECT * FROM students
         """)
-    @Result(property = "course", column = "course_id", one = @One(select = "org.example.homework.repository.CourseRepository.getCourseById"))
+   @Result(property = "course", column = "course_id", many = @Many(select = "org.example.homework.repository.CourseRepository.findCourseById"))
     List<Student> getAllStudent();
 
 
-//    @Select("""
-//        SELECT * FROM students WHERE students.student_id = #{students}
-//        """)
-//    Student findStudentById(@Param("students") Integer id);
-//
+    @Select("""
+        SELECT * FROM students WHERE students.student_id = #{students}
+        """)
+    Student findStudentById(@Param("students") Integer id);
+
 //    @Select("""
 //        INSERT INTO students (student_name, email, phone_number)
 //        VALUES (#{students.student_name}, #{students.email}, #{students.phone_number})

@@ -45,5 +45,6 @@ public interface CourseRepository {
         SELECT * FROM courses ORDER BY course_id
         LIMIT #{size} OFFSET #{size} * (#{page} - 1)
         """)
+    @Result(property = "instructor", column = "instructor_id", one = @One(select = "org.example.homework.repository.InstructorRepository.findInstructorById"))
     List<Course> getAllCourses(int page, int size);
 }
